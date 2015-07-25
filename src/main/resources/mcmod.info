@@ -1,0 +1,21 @@
+[
+{
+  "modid": "SimpleSkyGridUtilities",
+  "name": "Simple Sky Grid Utilities",
+  "description": "A helper mod for Simple Sky Grid",
+  "version": "${modVersion}",
+  "mcversion": "${mcVersion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": [
+    "Vorquel"
+  ],
+  "credits": "Thanks to all my fans and sponsors.",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent": "",
+  "dependencies": [
+  ]
+}
+]
