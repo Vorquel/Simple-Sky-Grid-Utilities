@@ -3,5 +3,10 @@
 item.identifier.jsonPretty.name=Identifier (Pretty)
 item.identifier.jsonCompact.name=Identifier (Compact)
 item.identifier.oreDictionary.name=Identifier (Dictionary)
+item.identifier.origin.name=Identifier (Mod of Origin)
+
+# Commands #
+
+commands.ssgReloadConfigs.usage=/ssReloadConfigs
 
 # END #

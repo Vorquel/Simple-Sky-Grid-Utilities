@@ -2,6 +2,7 @@ package vorquel.mod.simpleskygridutilities.item;
 
 import com.google.common.base.Strings;
 import com.google.gson.stream.JsonWriter;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -67,9 +68,11 @@ public class Identifier extends Item {
             switch(itemStack.getItemDamage()) {
                 case 0:   info = writeEntityJson(entity, 2); break;
                 case 1:   info = writeEntityJson(entity, 0); break;
-                default:  info = EntityList.getEntityString(entity);
+                case 2:  info = EntityList.getEntityString(entity); break;
+                default:  info = getModId(entity);
             }
         } catch(IOException ignored) {}
+        progressDamage(itemStack);
         progressDamage(itemStack);
         progressDamage(itemStack);
         sendMultiLineChat(player, info);
@@ -96,6 +99,14 @@ public class Identifier extends Item {
         return sbw.toString();
     }
 
+    private String getModId(EntityLivingBase entity) {
+        try {
+            return EntityRegistry.instance().lookupModSpawn(entity.getClass(), true).getContainer().getModId();
+        } catch(NullPointerException e) {
+            return "<Not a FML Registered Entity>";
+        }
+    }
+
     public static void sendMultiLineChat(EntityPlayer player, String message) {
         int length = message.length();
         for(int start = 0, next; start <= length; start = next + 1) {
@@ -115,7 +126,7 @@ public class Identifier extends Item {
 
     public static void progressDamage(ItemStack itemStack) {
         itemStack.setItemDamage(itemStack.getItemDamage() + 1);
-        if(itemStack.getItemDamage() > 2)
+        if(itemStack.getItemDamage() > 3)
             itemStack.setItemDamage(0);
     }
 
@@ -124,7 +135,8 @@ public class Identifier extends Item {
         switch(itemStack.getItemDamage()) {
             case 0: return  "item.identifier.jsonPretty";
             case 1: return  "item.identifier.jsonCompact";
-            default: return "item.identifier.oreDictionary";
+            case 2: return  "item.identifier.oreDictionary";
+            default: return "item.identifier.origin";
         }
     }
 }

@@ -6,6 +6,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.common.registry.GameData;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -29,7 +30,8 @@ public class MessageHandlerIdentify implements IMessageHandler<MessageIdentify, 
             switch(message.damage) {
                 case 0:  info = writeBlockJson(world,  message.x,  message.y,  message.z, 2); break;
                 case 1:  info = writeBlockJson(world,  message.x,  message.y,  message.z, 0); break;
-                default: info = writeOreNames(world,  message.x,  message.y,  message.z);
+                case 2: info = writeOreNames(world,  message.x,  message.y,  message.z); break;
+                default: info = getModId(world,  message.x,  message.y,  message.z);
             }
         } catch(IOException ignored) {}
         Identifier.sendMultiLineChat(ctx.getServerHandler().playerEntity, info);
@@ -81,5 +83,13 @@ public class MessageHandlerIdentify implements IMessageHandler<MessageIdentify, 
         else
             sb.append("<No Ore Dictionary Names Exist>");
         return sb.toString();
+    }
+
+    private String getModId(World world, int x, int y, int z) {
+        GameRegistry.UniqueIdentifier ui = GameRegistry.findUniqueIdentifierFor(world.getBlock(x, y, z));
+        if(ui == null)
+            return "<Not a FML Registered Block>";
+        else
+            return ui.modId;
     }
 }
