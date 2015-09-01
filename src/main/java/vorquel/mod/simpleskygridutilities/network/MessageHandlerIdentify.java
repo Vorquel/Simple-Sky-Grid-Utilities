@@ -1,6 +1,5 @@
 package vorquel.mod.simpleskygridutilities.network;
 
-import com.google.common.base.Strings;
 import com.google.gson.stream.JsonWriter;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -28,8 +27,8 @@ public class MessageHandlerIdentify implements IMessageHandler<MessageIdentify, 
         try {
             World world = ctx.getServerHandler().playerEntity.worldObj;
             switch(message.damage) {
-                case 0:  info = writeBlockJson(world,  message.x,  message.y,  message.z, 2); break;
-                case 1:  info = writeBlockJson(world,  message.x,  message.y,  message.z, 0); break;
+                case 0:  info = writeBlockJson(world,  message.x,  message.y,  message.z, true); break;
+                case 1:  info = writeBlockJson(world,  message.x,  message.y,  message.z, false); break;
                 case 2: info = writeOreNames(world,  message.x,  message.y,  message.z); break;
                 default: info = getModId(world,  message.x,  message.y,  message.z);
             }
@@ -38,10 +37,10 @@ public class MessageHandlerIdentify implements IMessageHandler<MessageIdentify, 
         return new MessageClipboard(info);
     }
 
-    private String writeBlockJson(World world, int x, int y, int z, int indent) throws IOException {
+    private String writeBlockJson(World world, int x, int y, int z, boolean normalize) throws IOException {
         StringBuilderWriter sbw = new StringBuilderWriter();
         JsonWriter jw = new JsonWriter(new BufferedWriter(sbw));
-        jw.setIndent(Strings.repeat(" ", indent));
+        jw.setIndent("  ");
         jw.beginObject();
         jw.name("type");
         jw.value("block");
@@ -57,9 +56,11 @@ public class MessageHandlerIdentify implements IMessageHandler<MessageIdentify, 
             jw.name("nbt");
             NBTTagCompound nbt = new NBTTagCompound();
             tileEntity.writeToNBT(nbt);
-            nbt.removeTag("x");
-            nbt.removeTag("y");
-            nbt.removeTag("z");
+            if(normalize) {
+                nbt.removeTag("x");
+                nbt.removeTag("y");
+                nbt.removeTag("z");
+            }
             NBT2JSON.writeCompound(jw, nbt);
         }
         jw.endObject();

@@ -21,10 +21,10 @@ sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
 
 def mcVersion = "1.7.10"
-def modVersion = "0.1.0"
+def modVersion = "0.2.0"
 
 version = mcVersion + "-" + modVersion
-group= "vorquel.mod.simpleskygridutilities" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = "vorquel.mod.simpleskygridutilities" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "SimpleSkyGridUtilities"
 
 minecraft {

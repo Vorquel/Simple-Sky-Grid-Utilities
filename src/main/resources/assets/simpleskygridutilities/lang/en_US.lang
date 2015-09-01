@@ -1,12 +1,12 @@
 # Items #
 
-item.identifier.jsonPretty.name=Identifier (Pretty)
-item.identifier.jsonCompact.name=Identifier (Compact)
+item.identifier.jsonNormal.name=Identifier (Normal)
+item.identifier.jsonRaw.name=Identifier (Raw)
 item.identifier.oreDictionary.name=Identifier (Dictionary)
 item.identifier.origin.name=Identifier (Mod of Origin)
 
 # Commands #
 
-commands.ssgReloadConfigs.usage=/ssReloadConfigs
+commands.ssguModsLoaded.usage=/ssguModsLoaded
 
 # END #

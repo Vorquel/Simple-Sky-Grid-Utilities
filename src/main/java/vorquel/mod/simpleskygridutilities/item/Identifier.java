@@ -1,6 +1,5 @@
 package vorquel.mod.simpleskygridutilities.item;
 
-import com.google.common.base.Strings;
 import com.google.gson.stream.JsonWriter;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -66,8 +65,8 @@ public class Identifier extends Item {
         String info = "Problem retrieving entity data";
         try {
             switch(itemStack.getItemDamage()) {
-                case 0:   info = writeEntityJson(entity, 2); break;
-                case 1:   info = writeEntityJson(entity, 0); break;
+                case 0:   info = writeEntityJson(entity, true); break;
+                case 1:   info = writeEntityJson(entity, false); break;
                 case 2:  info = EntityList.getEntityString(entity); break;
                 default:  info = getModId(entity);
             }
@@ -80,10 +79,10 @@ public class Identifier extends Item {
         return super.itemInteractionForEntity(itemStack, player, entity);
     }
 
-    private String writeEntityJson(Entity entity, int indent) throws IOException {
+    private String writeEntityJson(Entity entity, boolean normalized) throws IOException {
         StringBuilderWriter sbw = new StringBuilderWriter();
         JsonWriter jw = new JsonWriter(new BufferedWriter(sbw));
-        jw.setIndent(Strings.repeat(" ", indent));
+        jw.setIndent("  ");
         jw.beginObject();
         jw.name("type");
         jw.value("entity");
@@ -92,7 +91,8 @@ public class Identifier extends Item {
         NBTTagCompound nbt = new NBTTagCompound();
         entity.writeToNBT(nbt);
         jw.name("nbt");
-        nbt.removeTag("pos");
+        if(normalized)
+            nbt.removeTag("pos");
         NBT2JSON.writeCompound(jw, nbt);
         jw.endObject();
         jw.flush();
@@ -103,7 +103,7 @@ public class Identifier extends Item {
         try {
             return EntityRegistry.instance().lookupModSpawn(entity.getClass(), true).getContainer().getModId();
         } catch(NullPointerException e) {
-            return "<Not a FML Registered Entity>";
+            return "<Not an FML Registered Entity>";
         }
     }
 
@@ -133,8 +133,8 @@ public class Identifier extends Item {
     @Override
     public String getUnlocalizedName(ItemStack itemStack) {
         switch(itemStack.getItemDamage()) {
-            case 0: return  "item.identifier.jsonPretty";
-            case 1: return  "item.identifier.jsonCompact";
+            case 0: return  "item.identifier.jsonNormal";
+            case 1: return  "item.identifier.jsonRaw";
             case 2: return  "item.identifier.oreDictionary";
             default: return "item.identifier.origin";
         }
