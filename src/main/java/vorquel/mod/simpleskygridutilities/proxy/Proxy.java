@@ -4,10 +4,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
-import vorquel.mod.simpleskygridutilities.CommandModsLoaded;
-import vorquel.mod.simpleskygridutilities.Log;
-import vorquel.mod.simpleskygridutilities.Ref;
-import vorquel.mod.simpleskygridutilities.SimpleSkyGridUtilities;
+import vorquel.mod.simpleskygridutilities.*;
 import vorquel.mod.simpleskygridutilities.network.MessageClipboard;
 import vorquel.mod.simpleskygridutilities.network.MessageIdentify;
 
@@ -27,5 +24,6 @@ public class Proxy {
 
     public void serverLoad(FMLServerStartingEvent event) {
         event.registerServerCommand(new CommandModsLoaded());
+        event.registerServerCommand(new CommandEntityList());
     }
 }
