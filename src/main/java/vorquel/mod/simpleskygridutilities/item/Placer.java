@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 import vorquel.mod.simpleskygrid.config.SimpleSkyGridConfigReader;
 import vorquel.mod.simpleskygrid.config.prototype.IPrototype;
 import vorquel.mod.simpleskygrid.config.prototype.PFactory;
-import vorquel.mod.simpleskygrid.world.generated.GeneratedBlock;
 import vorquel.mod.simpleskygrid.world.generated.IGeneratedObject;
 import vorquel.mod.simpleskygridutilities.Log;
 
@@ -89,10 +88,26 @@ public class Placer extends Item {
         NBTTagCompound tag = stack.getTagCompound();
         if(!tag.hasKey("json")) return;
         String json = tag.getString("json");
+        //todo: remove debug output
+        Log.info(json);
         IPrototype<IGeneratedObject> prototype = PFactory.readGeneratedObject(new SimpleSkyGridConfigReader("Clipboard", new StringReader(json)));
+        Log.info(localize(prototype));
         if(!prototype.isComplete()) return;
         IGeneratedObject generatedObject = prototype.getObject();
         if(generatedObject == null) return;
         generatedObject.provideObject(world.rand, world, x, y, z);
+    }
+
+    private String localize(IPrototype<IGeneratedObject> prototype) {
+        //todo
+        return "no implementation";
+    }
+
+    private String localizeBlock(IPrototype<IGeneratedObject> prototype) {
+        return null;
+    }
+
+    private String localizeEntity(IPrototype<IGeneratedObject> prototype) {
+        return null;
     }
 }
