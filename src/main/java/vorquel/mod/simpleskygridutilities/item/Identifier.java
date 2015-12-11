@@ -54,7 +54,7 @@ public class Identifier extends Item {
                     Log.warn("Unexpected side of block found on shift right clicking block with Identifier");
                     break;
             }
-        SimpleSkyGridUtilities.network.sendToServer(new MessageIdentify(x, y, z, stack.getItemDamage()));
+        SimpleSkyGridUtilities.network.sendToServer(new MessageIdentify(x, y, z, stack.getMetadata()));
         return true;
     }
 
@@ -64,7 +64,7 @@ public class Identifier extends Item {
             return true;
         String info = "Problem retrieving entity data";
         try {
-            switch(itemStack.getItemDamage()) {
+            switch(itemStack.getMetadata()) {
                 case 0:   info = writeEntityJson(entity, true); break;
                 case 1:   info = writeEntityJson(entity, false); break;
                 case 2:  info = EntityList.getEntityString(entity); break;
@@ -125,14 +125,14 @@ public class Identifier extends Item {
     }
 
     public static void progressDamage(ItemStack itemStack) {
-        itemStack.setItemDamage(itemStack.getItemDamage() + 1);
-        if(itemStack.getItemDamage() > 3)
-            itemStack.setItemDamage(0);
+        itemStack.setMetadata(itemStack.getMetadata() + 1);
+        if(itemStack.getMetadata() > 3)
+            itemStack.setMetadata(0);
     }
 
     @Override
     public String getUnlocalizedName(ItemStack itemStack) {
-        switch(itemStack.getItemDamage()) {
+        switch(itemStack.getMetadata()) {
             case 0: return  "item.identifier.jsonNormal";
             case 1: return  "item.identifier.jsonRaw";
             case 2: return  "item.identifier.oreDictionary";

@@ -26,7 +26,7 @@ public class CommandEntityList extends CommandBase {
     @Override
     public void processCommand(ICommandSender commandSender, String[] p_71515_2_) {
         for(String name : (Set<String>)EntityList.stringToClassMapping.keySet()) {
-            func_152373_a(commandSender, this, name);
+            notifyOperators(commandSender, this, name);
         }
     }
 }

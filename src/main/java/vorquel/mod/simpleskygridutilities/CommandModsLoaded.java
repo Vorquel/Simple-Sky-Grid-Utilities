@@ -25,7 +25,7 @@ public class CommandModsLoaded extends CommandBase {
     @Override
     public void processCommand(ICommandSender commandSender, String[] options) {
         for(ModContainer mod : Loader.instance().getActiveModList()) {
-            func_152373_a(commandSender, this, "%s (%s)", mod.getName(), mod.getModId());
+            notifyOperators(commandSender, this, "%s (%s)", mod.getName(), mod.getModId());
         }
     }
 }

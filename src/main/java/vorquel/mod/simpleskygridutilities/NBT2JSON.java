@@ -11,7 +11,7 @@ public class NBT2JSON {
 
     public static void writeCompound(JsonWriter jw, NBTTagCompound nbt) throws IOException {
         jw.beginObject();
-        for(Object key : nbt.func_150296_c()) {
+        for(Object key : nbt.getKeySet()) {
             String label = (String) key;
             NBTBase tag = nbt.getTag(label);
             String prefix = tagPrefix(tag);
@@ -22,43 +22,43 @@ public class NBT2JSON {
     }
 
     public static void writeByte(JsonWriter jw, NBTTagByte tag) throws IOException {
-        jw.value(tag.func_150290_f());
+        jw.value(tag.getByte());
     }
 
     public static void writeShort(JsonWriter jw, NBTTagShort tag) throws IOException {
-        jw.value(tag.func_150289_e());
+        jw.value(tag.getShort());
     }
 
     public static void writeInt(JsonWriter jw, NBTTagInt tag) throws IOException {
-        jw.value(tag.func_150287_d());
+        jw.value(tag.getInt());
     }
 
     public static void writeLong(JsonWriter jw, NBTTagLong tag) throws IOException {
-        jw.value(tag.func_150291_c());
+        jw.value(tag.getLong());
     }
 
     public static void writeFloat(JsonWriter jw, NBTTagFloat tag) throws IOException {
-        jw.value(tag.func_150288_h());
+        jw.value(tag.getFloat());
     }
 
     public static void writeDouble(JsonWriter jw, NBTTagDouble tag) throws IOException {
-        jw.value(tag.func_150286_g());
+        jw.value(tag.getDouble());
     }
 
     public static void writeString(JsonWriter jw, NBTTagString tag) throws IOException {
-        jw.value(tag.func_150285_a_());
+        jw.value(tag.getString());
     }
 
     public static void writeByteArray(JsonWriter jw, NBTTagByteArray tag) throws IOException {
         jw.beginArray();
-        for(byte b : tag.func_150292_c())
+        for(byte b : tag.getByteArray())
             jw.value(b);
         jw.endArray();
     }
 
     public static void writeIntArray(JsonWriter jw, NBTTagIntArray tag) throws IOException {
         jw.beginArray();
-        for(int i : tag.func_150302_c())
+        for(int i : tag.getIntArray())
             jw.value(i);
         jw.endArray();
     }
